@@ -1,0 +1,5 @@
+package: github.com/kcmerrill/oogway
+import:
+- package: github.com/sirupsen/logrus
+  version: ^1.0.3
+- package: gopkg.in/yaml.v2
