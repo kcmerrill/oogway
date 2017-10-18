@@ -2,12 +2,12 @@
 
 ![oogway](assets/oogway.png "oogway")
 
-**Oogway** is simple, yet flexible, monitoring tool. At it's core, **Oogway** is a coordinated shell runner. You can determine how often checks are run, what to do when they fail, when they succeed. What you do is completely up to you. Send stats, send notifications etc ...
+**Oogway** is simple, yet flexible, monitoring tool. At it's core, **Oogway** is a coordinated shell runner. You can determine how often checks are run, what to do when they fail, when they succeed and even try to fix problems before they go critical. What you do is completely up to you. Send stats, send notifications etc ...
 
 ## Usage
 
 ```bash
-$ oogway --check-interjval 10s --check-dir /path/to/checks --check-extension oog  
+$ oogway --check-interval 10s --check-dir /path/to/checks --check-extension oog  
 ```
 
 * `--check-interval` How often the checks should be reloaded? *(default 1s)*
