@@ -36,12 +36,12 @@ func TestOogwayLoadChannel(t *testing.T) {
 		}
 
 		// when to reset
-		if check.Instructions.Check.Reset != time.Hour {
+		if check.Instructions.Reset != time.Hour {
 			log.Fatalf("Reset should have been set to 1h")
 		}
 
 		// when to go critical
-		if check.Instructions.Check.Tries != 4 {
+		if check.Instructions.Tries != 4 {
 			log.Fatalf("Try should have been set to 4 before going critical")
 		}
 	} else {

@@ -66,7 +66,7 @@ func (o *oogway) instruct() {
 	for {
 		o.loadChecks()
 		for _, check := range o.checks {
-			if check.LastChecked.Add(check.interval()).Before(time.Now()) {
+			if check.LastChecked.Add(check.every()).Before(time.Now()) {
 				check.check()
 			}
 		}

@@ -7,18 +7,17 @@ import (
 )
 
 type command struct {
-	Cmd     string        `yaml:"cmd"`
-	After   int           `yaml:"after"`
-	Every   time.Duration `yaml:"every"`
+	Cmd     string `yaml:"cmd"`
+	After   int    `yaml:"after"`
 	results []byte
 	error   error
 	RunTime int64
-	Reset   time.Duration `yaml:"reset"`
 }
 
 func (c *command) exec() *command {
 	// reset the goods
 	c.error, c.results = nil, nil
+	c.RunTime = 0
 
 	// no need to go on really ...
 	if c.Cmd == "" {
@@ -38,7 +37,7 @@ func (c *command) exec() *command {
 }
 
 func (c *command) id() string {
-	return c.Cmd + c.Summary + strconv.Itoa(c.After) + strconv.Itoa(c.Tries) + c.Every.String() + c.Reset.String()
+	return c.Cmd + strconv.Itoa(c.After)
 }
 
 func (c *command) ok() bool {

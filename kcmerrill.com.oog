@@ -1,11 +1,11 @@
 kcmerrill.com:
     desc: Verify kcmerrill.com is up and running
+    every: 2s
+    try: 5
+    reset: 30s
     check:
         cmd: |
             ls /tmp/bleh.txt
-        every: 10s
-        try: 4
-        reset: 1s
     fix: 
         cmd: |
             touch /tmp/asdf.txt
