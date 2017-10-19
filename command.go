@@ -8,8 +8,6 @@ import (
 
 type command struct {
 	Cmd     string        `yaml:"cmd"`
-	Summary string        `yaml:"summary"`
-	Tries   int           `yaml:"try"`
 	After   int           `yaml:"after"`
 	Every   time.Duration `yaml:"every"`
 	results []byte
