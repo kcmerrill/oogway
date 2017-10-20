@@ -10,9 +10,9 @@ func TestCommand(t *testing.T) {
 	}
 
 	// check exec status
-	c.exec()
+	c.exec("name", &check{})
 
-	if c.error != nil {
+	if c.Error != nil {
 		t.Fatalf("Not expecting c.exec() to throw an error")
 	}
 }

@@ -27,7 +27,7 @@ func (i *instructions) Try() int {
 	return i.Tries
 }
 func (i *instructions) id() string {
-	return b64.StdEncoding.EncodeToString([]byte(i.Summary + strconv.Itoa(i.Tries) + i.Check.id() + i.OK.id() + i.Warning.id() + i.Critical.id() + i.Fix.id() + i.Recover.id()))
+	return b64.StdEncoding.EncodeToString([]byte(i.Summary + i.Every.String() + strconv.Itoa(i.Tries) + i.Check.id() + i.OK.id() + i.Warning.id() + i.Critical.id() + i.Fix.id() + i.Recover.id()))
 }
 
 func (i *instructions) every() time.Duration {

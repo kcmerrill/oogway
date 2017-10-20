@@ -35,7 +35,7 @@ func TestInstructionsID(t *testing.T) {
 
 	oogway.loadChecks()
 
-	if oogway.checks["kcmerrill.com"].id() != "TXkgZGVzY3JpcHRpb24gd291bGQgZ28gaGVyZTR0b3VjaCAvdG1wL3N1aXRlQS5jaGVjay5rY21lcnJpbGwuY29tMDB0b3VjaCAvdG1wL3N1aXRlQS53YXJuaW5nLmtjbWVycmlsbC5jb20wdG91Y2ggL3RtcC9zdWl0ZUEuY3JpdGljYWwua2NtZXJyaWxsLmNvbTB0b3VjaCAvdG1wL3N1aXRlQS5maXgua2NtZXJyaWxsLmNvbTJ0b3VjaCAvdG1wL3N1aXRlQS5yZWNvdmVyLmtjbWVycmlsbC5jb20w" {
+	if oogway.checks["kcmerrill.com"].id() != "TXkgZGVzY3JpcHRpb24gd291bGQgZ28gaGVyZTBzNHRvdWNoIC90bXAvc3VpdGVBLmNoZWNrLmtjbWVycmlsbC5jb20wMHRvdWNoIC90bXAvc3VpdGVBLndhcm5pbmcua2NtZXJyaWxsLmNvbTB0b3VjaCAvdG1wL3N1aXRlQS5jcml0aWNhbC5rY21lcnJpbGwuY29tMHRvdWNoIC90bXAvc3VpdGVBLmZpeC5rY21lcnJpbGwuY29tMnRvdWNoIC90bXAvc3VpdGVBLnJlY292ZXIua2NtZXJyaWxsLmNvbTA=" {
 		log.Fatalf("Id() return has changed. It may need to be added to id()")
 	}
 }
