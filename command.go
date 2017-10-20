@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"os/exec"
 	"strconv"
 	"time"
@@ -9,6 +10,8 @@ import (
 type command struct {
 	Cmd     string `yaml:"cmd"`
 	After   int    `yaml:"after"`
+	Retry   int    `yaml:"retry"`
+	Nice    int    `yaml:"nice"`
 	results []byte
 	error   error
 	RunTime int64
@@ -17,12 +20,14 @@ type command struct {
 func (c *command) exec() *command {
 	// reset the goods
 	c.error, c.results = nil, nil
-	c.RunTime = 0
+	c.RunTime = -1
 
 	// no need to go on really ...
-	if c.Cmd == "" {
+	if !c.okToExec() {
 		return c
 	}
+
+	tmpl, err := template.New("cmdExecTemplate").Parse(c.Cmd)
 
 	// capture when the command started
 	started := time.Now().Unix()
@@ -42,4 +47,8 @@ func (c *command) id() string {
 
 func (c *command) ok() bool {
 	return c.error == nil
+}
+
+func (c *command) okToExec() bool {
+	return !(c.Cmd == "")
 }

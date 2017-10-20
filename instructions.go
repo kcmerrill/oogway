@@ -10,6 +10,7 @@ type instructions struct {
 	Summary  string        `yaml:"summary"`
 	Every    time.Duration `yaml:"every"`
 	Tries    int           `yaml:"try"`
+	Muted    bool          `yaml:"mute"`
 	Reset    time.Duration `yaml:"reset"`
 	Check    command       `yaml:"check"`
 	OK       command       `yaml:"ok"`

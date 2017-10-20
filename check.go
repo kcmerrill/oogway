@@ -19,6 +19,10 @@ type check struct {
 	Status       string
 }
 
+func (c *check) isMuted() bool {
+	return c.Instructions.Muted
+}
+
 func (c *check) every() time.Duration {
 	return c.Instructions.every()
 }
@@ -43,7 +47,7 @@ func (c *check) check() {
 		if c.Instructions.Check.exec().ok() {
 			// were we in critical mode?
 			if c.Attempts >= c.Instructions.Try() && c.Instructions.Try() != 0 {
-				// yes ...lets recover
+				// yes ...lets recove
 				c.Instructions.Recover.exec()
 				cLog.Info("Recovering")
 			}
