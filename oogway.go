@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"sync"
 	"time"
 
@@ -19,7 +20,7 @@ type oogway struct {
 }
 
 // loadChecks reads in all config files and reloads the configuration
-func (o *oogway) loadChecks() {
+func (o *oogway) loadChecks() error {
 	checks := make(map[string]*instructions)
 	checksInFiles := combineConfigFiles(o.ChecksDir, o.ChecksExtension)
 
@@ -29,7 +30,8 @@ func (o *oogway) loadChecks() {
 	yamlError := yaml.Unmarshal(checksInFiles, &checks)
 	if yamlError != nil {
 		log.Error("Unable to parse yaml")
-		return
+		log.Error(yamlError.Error())
+		return errors.New("Unable to parse yaml")
 	}
 
 	for name, li := range checks {
@@ -56,6 +58,7 @@ func (o *oogway) loadChecks() {
 			}
 		}
 	}
+	return nil
 }
 
 // instruct is the central hub for dispatching checks
@@ -63,7 +66,7 @@ func (o *oogway) instruct() {
 	for {
 		o.loadChecks()
 		for _, check := range o.checks {
-			if check.LastChecked.Add(check.interval()).Before(time.Now()) {
+			if check.LastChecked.Add(check.every()).Before(time.Now()) && !check.isMuted() {
 				check.check()
 			}
 		}

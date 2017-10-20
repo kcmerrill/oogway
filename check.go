@@ -16,10 +16,15 @@ type check struct {
 	Results      string
 	Error        error
 	Attempts     int
+	Status       string
 }
 
-func (c *check) interval() time.Duration {
-	return c.Instructions.interval()
+func (c *check) isMuted() bool {
+	return c.Instructions.Muted
+}
+
+func (c *check) every() time.Duration {
+	return c.Instructions.every()
 }
 
 func (c *check) id() string {
@@ -39,17 +44,18 @@ func (c *check) check() {
 		cLog := log.WithFields(log.Fields{"check": c.Name, "attempt": c.Attempts})
 
 		// was it ok?
-		if c.Instructions.Check.exec().ok() {
+		if c.Instructions.Check.exec("check", c).ok() {
 			// were we in critical mode?
-			if c.Attempts >= c.Instructions.Check.Tries {
-				// yes ...lets recover
-				c.Instructions.Recover.exec()
+			if c.Attempts >= c.Instructions.Try() && c.Instructions.Try() != 0 {
+				// yes ...lets recove
+				c.Instructions.Recover.exec("recover", c)
 				cLog.Info("Recovering")
 			}
 
 			// reset ...
 			c.Attempts = 0
-			c.Instructions.OK.exec()
+			c.Status = "OK"
+			c.Instructions.OK.exec("ok", c)
 			cLog.Info("Ok")
 			return
 		}
@@ -57,32 +63,34 @@ func (c *check) check() {
 		// increase our attempts
 		c.Attempts++
 
-		if c.Attempts <= c.Instructions.Check.Tries {
+		if c.Attempts <= c.Instructions.Try() {
 			// where we at in regards to attempts vs tries
-			if c.Attempts == c.Instructions.Check.Tries {
+			if c.Attempts >= c.Instructions.Try() {
 				// we need to error out :(
-				cLog.Error("Check failed. Now critical")
-				c.Instructions.Critical.exec()
+				cLog.Error("Check failed. Upgrading status to critical")
+				c.Status = "Critical"
 				c.LastCritical = time.Now()
+				c.Instructions.Critical.exec("critical", c)
 			} else {
 				// not yet critical
 				cLog.Warn("Check failed")
-				c.Instructions.Warning.exec()
+				c.Status = "Warning"
+				c.Instructions.Warning.exec("warn", c)
 			}
 
 			// ok, so we failed ... but not quite at error levels
-			if c.Attempts >= c.Instructions.Fix.After && c.Attempts <= c.Instructions.Check.Tries {
+			if c.Attempts >= c.Instructions.Fix.After && c.Attempts <= c.Instructions.Try() {
 				if c.Instructions.Fix.Cmd != "" {
 					// regardless, try to fix ...
-					c.Instructions.Fix.exec()
+					c.Instructions.Fix.exec("fix", c)
 					cLog.Info("Attempting fix")
 				}
 			}
 		} else {
 			// Ok, so we are over our check attempts ....
-			if c.LastCritical.Add(c.Instructions.Check.Reset).Before(time.Now()) {
-				log.Info("RESETTING!")
+			if c.LastCritical.Add(c.Instructions.Reset).Before(time.Now()) && c.Instructions.Try() != 0 {
 				c.Attempts = 0
+				cLog.Info("Reset check")
 			}
 		}
 	}()

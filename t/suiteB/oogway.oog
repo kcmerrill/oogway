@@ -1,0 +1,18 @@
+oogway.test:
+    desc: Verify oogway.test is up and running
+    every: 1ms
+    try: 5
+    reset: 1h
+    check:
+        cmd: |
+            touch /tmp/oogway.test.check.{{ .Attempts }} && ls -alh /tmp/oogway.test.check.20
+    fix: 
+        after: 3
+        cmd: |
+            touch /tmp/oogway.test.fix.{{ .Attempts }}
+    warning:
+        cmd: |
+            touch /tmp/oogway.test.warn.{{ .Attempts }}
+    critical:
+        cmd: |
+            touch /tmp/oogway.test.critical.{{ .Attempts }}
