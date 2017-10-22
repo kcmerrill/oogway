@@ -4,6 +4,8 @@
 
 **Oogway** is simple, yet flexible, monitoring tool. At it's core, **Oogway** is a coordinated shell runner. You can determine how often checks are run, what to do when they fail, when they succeed and even try to fix problems before they go critical. What you do is completely up to you. Send stats, send notifications etc ...
 
+**Designed to get you up and running in < 5 minutes**
+
 ## Usage
 
 ```bash
