@@ -27,6 +27,7 @@ A few things to note:
 1. `Oogway` pairs nicely with graphing databases such as [InfluxDB](https://github.com/influxdata/influxdb).
    1. Notice on the critical, sending data. The `cmd` key is just yaml, so it can accept multi-line commands.
 1. The `cmd` is just run on the shell, so if you have something much more complicated than just a simple curl, feel free to call your application here. 
+1. You can have as many files you'd like, or many checks in one file. 100% up to you. Just note that duplicated check names will be overwritten.
 
 ```yaml
 # mixed, the name of the check {{ .Name }}
