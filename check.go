@@ -13,8 +13,6 @@ type check struct {
 	Instructions *instructions
 	LastChecked  time.Time
 	LastCritical time.Time
-	Results      string
-	Error        error
 	Attempts     int
 	Status       string
 }

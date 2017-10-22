@@ -11,9 +11,8 @@ import (
 )
 
 type command struct {
-	Cmd     string        `yaml:"cmd"`
-	After   int           `yaml:"after"`
-	Nice    time.Duration `yaml:"nice"`
+	Cmd     string `yaml:"cmd"`
+	After   int    `yaml:"after"`
 	Results []byte
 	Error   error
 	RunTime int64
@@ -60,7 +59,7 @@ func (c *command) exec(commandType string, check *check) *command {
 }
 
 func (c *command) id() string {
-	return c.Cmd + strconv.Itoa(c.After) + c.Nice.String()
+	return c.Cmd + strconv.Itoa(c.After)
 }
 
 func (c *command) ok() bool {
