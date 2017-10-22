@@ -6,30 +6,9 @@
 
 **Designed to get you up and running in < 5 minutes**
 
-## Usage
-
-```bash
-$ oogway --check-interval 10s --check-dir /path/to/checks --check-extension oog  
-```
-
-* `--check-interval` How often the checks should be reloaded? *(default 1s)*
-* `--check-dir` Directory where checks are stored *(default ".")*
-* `--check-extension` Extension of check yaml files *(default "oog")*
-
-## Configuring Checks
+## Checks
 
 Checks are yaml files with a given extension. By default, that extension is `.yml`. Within these yaml files will contain your instructions in regards to each stage. 
-
-A few things to note:
-
-1. I'm using pre-baked [`alfred`](https://github.com/kcmerrill/alfred) tasks here as to not repeat myself.
-   1. Feel free and use these tasks too! Just remember to set `SLACK_WEBHOOK_URL` in your `env`.
-1. While decent notifications, you can add whatever you want to commands. 
-   1. Be creative, you can use an external config like [sherlock](https://github.com/kcmerrill/sherlock) to do heartbeats.
-1. `Oogway` pairs nicely with graphing databases such as [InfluxDB](https://github.com/influxdata/influxdb).
-   1. Notice on the critical, sending data. The `cmd` key is just yaml, so it can accept multi-line commands.
-1. The `cmd` is just run on the shell, so if you have something much more complicated than just a simple curl, feel free to call your application here. 
-1. You can have as many files you'd like, or many checks in one file. 100% up to you. Just note that duplicated check names will be overwritten.
 
 ```yaml
 # mixed, the name of the check {{ .Name }}
@@ -68,6 +47,17 @@ kcmerrill.com:
             alfred /oogway/slack http.recover "#alerts" "{{ .Name }}" "https://kcmerrill.com"
 ```
 
+A few things to note:
+
+1. I'm using pre-baked [`alfred`](https://github.com/kcmerrill/alfred) tasks here as to not repeat myself.
+   1. Feel free and use these tasks too! Just remember to set `SLACK_WEBHOOK_URL` in your `env`.
+1. While decent notifications, you can add whatever you want to commands. 
+   1. Be creative, you can use an external config like [sherlock](https://github.com/kcmerrill/sherlock) to do heartbeats.
+1. `Oogway` pairs nicely with graphing databases such as [InfluxDB](https://github.com/influxdata/influxdb).
+   1. Notice on the critical, sending data. The `cmd` key is just yaml, so it can accept multi-line commands.
+1. The `cmd` is just run on the shell, so if you have something much more complicated than just a simple curl, feel free to call your application here. 
+1. You can have as many files you'd like, or many checks in one file. 100% up to you. Just note that duplicated check names will be overwritten.
+
 ## The Flow
 
 1. **check** *(required)* is run. Depending on exit code:
@@ -97,3 +87,13 @@ Every command that you run, will have access to the other commands and it's erro
 via go:
 
 `$ go get -u github.com/kcmerrill/oogway`
+
+## Usage
+
+```bash
+$ oogway --check-interval 10s --check-dir /path/to/checks --check-extension oog  
+```
+
+* `--check-interval` How often the checks should be reloaded? *(default 1s)*
+* `--check-dir` Directory where checks are stored *(default ".")*
+* `--check-extension` Extension of check yaml files *(default "oog")*
