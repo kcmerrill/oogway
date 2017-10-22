@@ -11,10 +11,9 @@ import (
 )
 
 type command struct {
-	Cmd     string `yaml:"cmd"`
-	After   int    `yaml:"after"`
-	Retry   int    `yaml:"retry"`
-	Nice    int    `yaml:"nice"`
+	Cmd     string        `yaml:"cmd"`
+	After   int           `yaml:"after"`
+	Nice    time.Duration `yaml:"nice"`
 	Results []byte
 	Error   error
 	RunTime int64
@@ -53,11 +52,15 @@ func (c *command) exec(commandType string, check *check) *command {
 
 	// calculate the runtime for the given command
 	c.RunTime = time.Now().Unix() - started
+	if c.Error == nil {
+		return c
+	}
+	// hmmm ... if we made it here, we error'd out
 	return c
 }
 
 func (c *command) id() string {
-	return c.Cmd + strconv.Itoa(c.After)
+	return c.Cmd + strconv.Itoa(c.After) + c.Nice.String()
 }
 
 func (c *command) ok() bool {

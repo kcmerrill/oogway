@@ -23,7 +23,7 @@ func TestCommandID(t *testing.T) {
 		After: 1234,
 	}
 
-	if c.id() != "12341234" {
+	if c.id() != "123412340s" {
 		t.Fatalf("Command id() did not return the correct id()")
 	}
 }

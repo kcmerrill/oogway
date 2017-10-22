@@ -7,7 +7,7 @@ import (
 
 func main() {
 	checks := flag.String("check-dir", ".", "Directory of checks")
-	checksExtension := flag.String("check-extension", "oog", "Extension of check yaml files")
+	checksExtension := flag.String("check-extension", "yml", "Extension of check yaml files")
 	checkInterval := flag.Duration("check-interval", time.Second, "How often the checks should be reloaded?")
 	flag.Parse()
 

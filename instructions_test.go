@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"testing"
 	"time"
@@ -35,7 +36,8 @@ func TestInstructionsID(t *testing.T) {
 
 	oogway.loadChecks()
 
-	if oogway.checks["kcmerrill.com"].id() != "TXkgZGVzY3JpcHRpb24gd291bGQgZ28gaGVyZTBzNHRvdWNoIC90bXAvc3VpdGVBLmNoZWNrLmtjbWVycmlsbC5jb20wMHRvdWNoIC90bXAvc3VpdGVBLndhcm5pbmcua2NtZXJyaWxsLmNvbTB0b3VjaCAvdG1wL3N1aXRlQS5jcml0aWNhbC5rY21lcnJpbGwuY29tMHRvdWNoIC90bXAvc3VpdGVBLmZpeC5rY21lcnJpbGwuY29tMnRvdWNoIC90bXAvc3VpdGVBLnJlY292ZXIua2NtZXJyaWxsLmNvbTA=" {
+	if oogway.checks["kcmerrill.com"].id() != "TXkgZGVzY3JpcHRpb24gd291bGQgZ28gaGVyZTFoMG0wczBzNHRvdWNoIC90bXAvc3VpdGVBLmNoZWNrLmtjbWVycmlsbC5jb20wMHMwMHN0b3VjaCAvdG1wL3N1aXRlQS53YXJuaW5nLmtjbWVycmlsbC5jb20wMHN0b3VjaCAvdG1wL3N1aXRlQS5jcml0aWNhbC5rY21lcnJpbGwuY29tMDBzdG91Y2ggL3RtcC9zdWl0ZUEuZml4LmtjbWVycmlsbC5jb20yMHN0b3VjaCAvdG1wL3N1aXRlQS5yZWNvdmVyLmtjbWVycmlsbC5jb20wMHM=" {
+		fmt.Println(oogway.checks["kcmerrill.com"].id())
 		log.Fatalf("Id() return has changed. It may need to be added to id()")
 	}
 }
