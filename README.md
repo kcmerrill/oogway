@@ -90,7 +90,7 @@ via go:
 
 via docker:
 
-`$ docker run --rm -d -v $PWD:/oogway kcmerrill/oogway
+`$ docker run --rm -d -v $PWD:/oogway kcmerrill/oogway`
 
 ## Usage
 
