@@ -88,6 +88,10 @@ via go:
 
 `$ go get -u github.com/kcmerrill/oogway`
 
+via docker:
+
+`$ docker run --rm -d -v $PWD:/oogway kcmerrill/oogway
+
 ## Usage
 
 ```bash

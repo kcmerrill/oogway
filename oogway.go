@@ -34,6 +34,28 @@ func (o *oogway) loadChecks() error {
 		return errors.New("Unable to parse yaml")
 	}
 
+	// delete checks that are no longer needed
+	for preExistingCheck := range o.checks {
+		del := true
+
+		// go through the new checks, make sure it exists
+		for newCheck := range checks {
+			if newCheck == preExistingCheck {
+				del = false
+				break
+			}
+		}
+
+		// do we need to delete it?
+		if del {
+			delete(o.checks, preExistingCheck)
+			log.WithFields(log.Fields{
+				"name": preExistingCheck,
+			}).Error("Removing check")
+
+		}
+	}
+
 	for name, li := range checks {
 		// does this check exist?
 		if _, exists := o.checks[name]; !exists {
