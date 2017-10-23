@@ -1,0 +1,28 @@
+push:
+    summary: Push oogway
+    command: git status
+    tasks: verification commit dockerize docker.push
+
+commit:
+    summary: Commit changes
+    commands: |
+        git status
+        git add .
+        git commit
+        git push origin master
+    exit: 42
+
+verification:
+    alias: pause
+    summary: Ok with these changes? Hit [enter] if so.
+    command: read input
+    private: true
+
+dockerize:
+    summary: Dockerize Oogway
+    command: |
+        docker build -t kcmerrill/oogway .
+
+docker.push:
+    summary: Push kcmerrill/oogway to dockerhub
+    command: docker push kcmerrill/oogway
