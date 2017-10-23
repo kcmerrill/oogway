@@ -11,38 +11,21 @@
 Checks are yaml files with a given extension. By default, that extension is `.yml`. Within these yaml files will contain your instructions in regards to each stage. 
 
 ```yaml
-# mixed, the name of the check {{ .Name }}
 kcmerrill.com: 
-    # golang duration, how often the check should be run {{ .Every }}
     every: 5s 
-    # golang duration, once critical, when to reset(useful for notifications) {{ .Reset }}
     reset: 15m 
-    # int, how many times should we try the `check` command before going critical {{ .Try }}
     try: 5 
     check: 
-        # the main command to run. Exit 0 is succesful, anything else is a failure.
         cmd: curl --fail https://kcmerrill.com # string, command to be run via bash {{ .Instructions.Check.Cmd }}
-    # using fix, try to run a few commands that you think might fix the issue proactively
     fix:
-        # int, only run this command after X attempts {{ .Instructions.Check.After }}
         after: 5 
-        # string, the command to run in order to fix {{ .Instructions.Fix.Cmd }}
         cmd: | 
             ssh me@kcmerrill.com "cd /code/kcmerrill.com && alfred /dev staticwebserver"
-    # warning will fire off when attempts >= 0 && attempts <= critical
-    warning:
-        # string, the command to run {{ .Instructions.Warning.Cmd }}
-        cmd: |
-            alfred /oogway/slack http.warning "#alerts" "{{ .Name }}" "https://kcmerrill.com"
-    # critical happens when check fails X times and attempts >= try
     critical:
-        # string, notice how you can have multiple commands on new lines? That's just yaml. There are other options available too! {{ .Instructios.Critical.Cmd }}
         cmd: |
             alfred /oogway/slack http.critical "#alerts" "{{ .Name }}" "https://kcmerrill.com"
             curl -XPOST "http://localhost:8086/write?db=oogway" -d 'check,http=kcmerrill.com,status=critical critical=1'
-    # when a check was previously in a critical state, then recovers, recover will be triggered 
     recover:
-        # string, runs when a critical check recovers {{ .Instructions.Recover.Cmd }}
         cmd: |
             alfred /oogway/slack http.recover "#alerts" "{{ .Name }}" "https://kcmerrill.com"
 ```
