@@ -16,7 +16,7 @@ kcmerrill.com:
     reset: 15m 
     try: 5 
     check: 
-        cmd: curl --fail https://kcmerrill.com # string, command to be run via bash {{ .Instructions.Check.Cmd }}
+        cmd: curl --fail https://kcmerrill.com
     fix:
         after: 5 
         cmd: | 
