@@ -8,7 +8,7 @@
 
 ## Checks
 
-Checks are yaml files with a given extension. By default, that extension is `.yml`. Within these yaml files will contain your instructions in regards to each stage. 
+Checks are yaml files with a given extension. By default, that extension is `.yml`. Within these yaml files will contain your instructions in regards to each check. 
 
 ```yaml
 kcmerrill.com: 
