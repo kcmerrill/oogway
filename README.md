@@ -8,18 +8,18 @@
 
 ## Checks
 
-Checks are yaml files with a given extension. By default, that extension is `.yml`. Within these yaml files will contain your instructions in regards to each check. 
+Checks are yaml files with a given extension. By default, that extension is `.oog`. Within these yaml files will contain your instructions in regards to each check.
 
 ```yaml
-kcmerrill.com: 
-    every: 5s 
-    reset: 15m 
-    try: 5 
-    check: 
+kcmerrill.com:
+    every: 5s
+    reset: 15m
+    try: 5
+    check:
         cmd: curl --fail https://kcmerrill.com
     fix:
-        after: 5 
-        cmd: | 
+        after: 5
+        cmd: |
             ssh me@kcmerrill.com "cd /code/kcmerrill.com && alfred /dev staticwebserver"
     warning:
         cmd: |
@@ -38,11 +38,11 @@ A few things to note:
 
 1. I'm using pre-baked [`alfred`](https://github.com/kcmerrill/alfred) tasks here as to not repeat myself.
    1. Feel free and use these tasks too! Just remember to set `SLACK_WEBHOOK_URL` in your `env`.
-1. While decent notifications, you can add whatever you want to commands. 
+1. While decent notifications, you can add whatever you want to commands.
    1. Be creative, you can use an external config like [sherlock](https://github.com/kcmerrill/sherlock) to do heartbeats.
 1. `Oogway` pairs nicely with graphing databases such as [InfluxDB](https://github.com/influxdata/influxdb).
    1. Notice on the critical, sending data. The `cmd` key is just yaml, so it can accept multi-line commands.
-1. The `cmd` is just run on the shell, so if you have something much more complicated than just a simple curl, feel free to call your application here. 
+1. The `cmd` is just run on the shell, so if you have something much more complicated than just a simple curl, feel free to call your application here.
 1. You can have as many files you'd like, or many checks in one file. 100% up to you. Just note that duplicated check names will be overwritten.
 
 ## The Flow
@@ -63,7 +63,7 @@ Every command that you run, will have access to the other commands and it's erro
 * **{{ .Attempts }}** int, how many times the check has been run
 * **{{ .Status }}** string, ok|warning|critical
 * **{{ .Instructions.Check|Fix|Warning|Critical|Recover.Cmd }}** string, command that was run
-* **{{ .Instructions.Check|Fix|Warning|Critical|Recover.Results }}** string, results of the command 
+* **{{ .Instructions.Check|Fix|Warning|Critical|Recover.Results }}** string, results of the command
 * **{{ .Instructions.Check|Fix|Warning|Critical|Recover.Error }}** string, errors of the command
 * **{{ .Instructions.Check|Fix|Warning|Critical|Recover.Runtime }}** int, elapsed time(in seconds) of the command
 
@@ -82,7 +82,7 @@ via docker:
 ## Usage
 
 ```bash
-$ oogway --check-interval 10s --check-dir /path/to/checks --check-extension oog  
+$ oogway --check-interval 10s --check-dir /path/to/checks
 ```
 
 * `--check-interval` How often the checks should be reloaded? *(default 1s)*
