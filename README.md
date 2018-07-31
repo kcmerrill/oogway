@@ -23,15 +23,15 @@ kcmerrill.com:
             ssh me@kcmerrill.com "cd /code/kcmerrill.com && alfred /dev staticwebserver"
     warning:
         cmd: |
-            alfred /oogway/slack http.warning "#alerts" "{{ .Name }}" "https://kcmerrill.com"
+            alfred /oogway/slack:http.warning "#alerts" "{{ .Name }}" "https://kcmerrill.com"
             curl -XPOST "http://localhost:8086/write?db=oogway" -d 'check,http=kcmerrill.com,status=warning warning=1'
     critical:
         cmd: |
-            alfred /oogway/slack http.critical "#alerts" "{{ .Name }}" "https://kcmerrill.com"
+            alfred /oogway/slack:http.critical "#alerts" "{{ .Name }}" "https://kcmerrill.com"
             curl -XPOST "http://localhost:8086/write?db=oogway" -d 'check,http=kcmerrill.com,status=critical critical=1'
     recover:
         cmd: |
-            alfred /oogway/slack http.recover "#alerts" "{{ .Name }}" "https://kcmerrill.com"
+            alfred /oogway/slack:http.recover "#alerts" "{{ .Name }}" "https://kcmerrill.com"
 ```
 
 A few things to note:
